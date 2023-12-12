@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <base href="/d05/">-->
+</head>
+<body>
+<!--
+1 相对路径
+    以当前资源的所在路径为出发点去找目标资源
+    语法：不以 / 开头
+         ./  表示当前资源的路径
+         ../ 表示当前资源的上一层路径
+    缺点：目标资源路径受到当前资源路径的影响 不同的位置，相对路径写法不同
+
+2 绝对路径
+    始终以固定的路径作为出发点去找目标资源 和当前资源所在的路径没有关系
+    语法：以 / 开头
+         不同的项目中，固定的路径出发点可能不一致，可以测试一下 http://localhost:8080/d05/static/img/logo.jpg
+
+    优点：目标资源路径的写法不会受到当前资源路径的影响，不同的位置，绝对路径写法一致
+    缺点：绝对路径要补充项目的上下文 项目上下文是可以改变的
+
+    通过 head>base>href 属性，定义相对路径公共前缀，通过公共前缀把一个相对路径转换为绝对路径(不完美)
+    <base href="/d05/">
+-->
+
+<img src="/static/img/logo.jpg">
+<img src="/static/img/logo.jpg">
+<img src="/static/img/logo.jpg">
+<img src="/static/img/logo.jpg">
+</body>
+</html>

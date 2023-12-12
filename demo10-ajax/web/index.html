@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function getMessage() {
+            // 实例化一个xmlHttpRequest
+            var request = new XMLHttpRequest()
+            // 设置xmlHttpRequest对象的回调函数
+            // request.readyState    1 2 3 4
+            // request.status 响应状态码 响应行状态码
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    // 接受响应结果，处理结果
+                    // request.responseText 后端响应回来的响应体中的数据
+                    // console.log(request.responseText)
+                    // 将信息放到指定的位置
+                    var inputEle = document.getElementById("message")
+                    inputEle.value = request.responseText
+                    // 也可以做页面跳转
+                    // window.location.href="http://www.atguigu.com"
+                }
+            }
+
+            // 设置发送请求的方式和请求的资源路径
+            request.open("GET", "/hello?username=zhangsan")
+            // 发送请求
+            request.send()
+        }
+    </script>
+</head>
+<body>
+<button onclick="getMessage()">按钮</button>
+<input type="text" id="message">
+</body>
+</html>

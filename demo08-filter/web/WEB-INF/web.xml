@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+<!--    <filter>-->
+<!--        <filter-name>loginFilter</filter-name>-->
+<!--        <filter-class>com.atguigu.filters.LoginFilter</filter-class>-->
+<!--    </filter>-->
+<!--    &lt;!&ndash; 配置管理器的过滤作用规则 路径 servlet-name&ndash;&gt;-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>loginFilter</filter-name>-->
+<!--        &lt;!&ndash;-->
+<!--        url-pattern     根据请求的资源路径，对指定的请求进行过滤-->
+<!--            /*          过滤全部资源-->
+<!--            /a/*        过滤以a开头的资源-->
+<!--            *.html      过了以html为后缀的资源-->
+<!--            /servlet1   对servlet1请求进行关联-->
+<!--        servlet-name    根据请求的servlet别名，对指定的servlet资源将进行过滤-->
+
+<!--        一个filter-mapping中可以同时存在多个 url-pattern 和 servlet-name-->
+<!--        &ndash;&gt;-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--&lt;!&ndash;        <url-pattern>/servlet1</url-pattern>&ndash;&gt;-->
+<!--&lt;!&ndash;        <servlet-name>servlet1a</servlet-name>&ndash;&gt;-->
+<!--    </filter-mapping>-->
+
+<!--    <filter>-->
+<!--        <filter-name>lifeCycleFilter</filter-name>-->
+<!--        <filter-class>com.atguigu.filters.LifeCycleFilter</filter-class>-->
+<!--        <init-param>-->
+<!--            <param-name>dateTimePattern</param-name>-->
+<!--            <param-value>yyyy-MM-dd HH:mm:ss</param-value>-->
+<!--        </init-param>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>lifeCycleFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+
+<!--    <filter>
+        <filter-name>filter1</filter-name>
+        <filter-class>com.atguigu.filters.Filter1</filter-class>
+    </filter>
+    <filter>
+        <filter-name>filter2</filter-name>
+        <filter-class>com.atguigu.filters.Filter2</filter-class>
+    </filter>
+    <filter>
+        <filter-name>filter3</filter-name>
+        <filter-class>com.atguigu.filters.Filter3</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>filter3</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>filter2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>filter1</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+</web-app>
