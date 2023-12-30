@@ -2,16 +2,15 @@ package com.atguigu.schedule.controller;
 
 import com.atguigu.schedule.common.Result;
 import com.atguigu.schedule.common.ResultCodeEnum;
-import com.atguigu.schedule.util.WebUtil;
 import com.atguigu.schedule.pojo.SysUser;
 import com.atguigu.schedule.service.SysUserService;
 import com.atguigu.schedule.service.impl.SysUserServiceImpl;
 import com.atguigu.schedule.util.MD5Util;
+import com.atguigu.schedule.util.WebUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -55,25 +54,21 @@ public class SysUserController extends BaseController {
      * @throws IOException
      */
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 接受客户端提交的参数
-        String username = req.getParameter("username");
-        String userPwd = req.getParameter("userPwd");
-        // 调用服务层方法，根据用户名查询用户信息
-        SysUser loginUser = userService.findByUsername(username);
-        if (loginUser == null) {
-            // 跳转到用户名有误提示页
-            resp.sendRedirect("/loginUsernameError.html");
-        } else if (!MD5Util.encrypt(userPwd).equals(loginUser.getUserPwd())) {
+        // 1 接受客户端提交的JSON参数，并转换为User对象，获取信息
+        SysUser sysUser = WebUtil.readJson(req, SysUser.class);
+        // 2 调用服务层方法，根据用户名查询用户信息
+        SysUser loginUser = userService.findByUsername(sysUser.getUsername());
+        Result result = null;
+        if (null == loginUser) {
+            result = Result.build(null, ResultCodeEnum.USERNAME_ERROR);
+        } else if (!MD5Util.encrypt(sysUser.getUserPwd()).equals(loginUser.getUserPwd())) {
             // 判断密码是否一致
-            // 跳转到密码有误提示页
-            resp.sendRedirect("/loginUserPwdError.html");
+            result = Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         } else {
-            // 将登录成功之后，将登录的用户信息放入session
-            HttpSession session = req.getSession();
-            session.setAttribute("sysUser", loginUser);
-            // 跳转到首页
-            resp.sendRedirect("/showSchedule.html");
+            result = Result.ok(null);
         }
+        // 3 将登录结果响应给客户端
+        WebUtil.writeJson(resp, result);
     }
 
     /**
@@ -85,18 +80,16 @@ public class SysUserController extends BaseController {
      * @throws IOException
      */
     protected void regist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 接受客户端提交的参数
-        String username = req.getParameter("username");
-        String userPwd = req.getParameter("userPwd");
-        // 调用服务层方法，完成注册功能
+        // 1 接受客户端提交的JSON参数，并转换为User对象，获取信息
+        SysUser sysUser = WebUtil.readJson(req, SysUser.class);
+        // 2 调用服务层方法，完成注册功能
         // 将参数放入一个对象中，在调用regist方法时传入
-        SysUser sysUser = new SysUser(null, username, userPwd);
         int rows = userService.regist(sysUser);
-        // 根据注册结果（成功、失败）做页面跳转
-        if (rows > 0) {
-            resp.sendRedirect("/registSuccess.html");
-        } else {
-            resp.sendRedirect("/registFail.html");
+        // 3 根据注册结果（成功、失败）做页面跳转
+        Result result = Result.ok(null);
+        if (rows < 1) {
+            result = Result.build(null, ResultCodeEnum.USERNAME_USED);
         }
+        WebUtil.writeJson(resp, result);
     }
 }
