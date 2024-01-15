@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: ClimbHu
@@ -65,7 +67,12 @@ public class SysUserController extends BaseController {
             // 判断密码是否一致
             result = Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         } else {
-            result = Result.ok(null);
+            // 登录成功，将用户的uid和username响应给客户端
+            Map map = new HashMap();
+            // 密码脱敏
+            loginUser.setUserPwd("");
+            map.put("loginUser", loginUser);
+            result = Result.ok(map);
         }
         // 3 将登录结果响应给客户端
         WebUtil.writeJson(resp, result);
